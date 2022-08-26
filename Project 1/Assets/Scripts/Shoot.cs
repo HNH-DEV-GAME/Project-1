@@ -10,14 +10,14 @@ public class Shoot : MonoBehaviour
     [SerializeField] private Transform muzzleEffect;
     private StarterAssetsInputs _input;
     private RigTranstion _rigTranstion;
-    private Gun dataGun;
+    private GunManager dataGun;
     private Animator _ani;
 
     private Vector3 _direction;
     private float tempCountDown;
     private void Start()
     {
-        dataGun = GetComponent<Gun>();
+        dataGun = GetComponent<GunManager>();
         _rigTranstion = GetComponent<RigTranstion>();
         _input = GetComponent<StarterAssetsInputs>();
         _ani = GetComponent<Animator>();

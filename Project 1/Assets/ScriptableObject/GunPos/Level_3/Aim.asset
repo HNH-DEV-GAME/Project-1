@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76f3f263979cec3489ffd6d2b9370a66, type: 3}
-  m_Name: ShootGun
+  m_Script: {fileID: 11500000, guid: 478a16bdb135c0f4280980ba8c97c78b, type: 3}
+  m_Name: Aim
   m_EditorClassIdentifier: 
-  delayTimeShoot: 0.5
-  force: 10
+  name: 0
+  position: {x: -0.033, y: -0.097, z: 0.225}
+  Rotation: {x: -68.686, y: 274.116, z: -83.277}
