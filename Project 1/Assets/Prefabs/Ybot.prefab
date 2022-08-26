@@ -221,7 +221,7 @@ GameObject:
   m_Layer: 8
   m_Name: Point
   m_TagString: Untagged
-  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -233,7 +233,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920786060}
   m_LocalRotation: {x: 0.030214248, y: -0.7075813, z: -0.69773245, w: -0.107635014}
-  m_LocalPosition: {x: 0.001977682, y: 4.685202, z: -0.10598033}
+  m_LocalPosition: {x: -0.01, y: 5.22, z: 0.23}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 1459809464}
@@ -477,7 +477,7 @@ MonoBehaviour:
     m_SourceObjects:
       m_Length: 1
       m_Item0:
-        transform: {fileID: 0}
+        transform: {fileID: 4322060086046735206}
         weight: 1
       m_Item1:
         transform: {fileID: 0}
@@ -1935,8 +1935,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4285002806052474260}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 318.5, y: 193.12495, z: 12.25}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.45, z: 1.054}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6877336657710094170}
@@ -2330,6 +2330,7 @@ GameObject:
   - component: {fileID: 1919400785}
   - component: {fileID: 1919400786}
   - component: {fileID: 3740315679296371659}
+  - component: {fileID: 313069515}
   m_Layer: 8
   m_Name: Ybot
   m_TagString: Player
@@ -2547,7 +2548,7 @@ MonoBehaviour:
   aimColliderLayerMask:
     serializedVersion: 2
     m_Bits: 1
-  debugTransform: {fileID: 0}
+  debugTransform: {fileID: 4322060086046735206}
 --- !u!114 &1919400786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2561,7 +2562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigBuilder: {fileID: 1919400784}
-  _stateCharacter: 0
+  _stateCharacter: 1
 --- !u!114 &3740315679296371659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2574,8 +2575,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820752883016bd54aac093c9f8b31279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 0}
+  bullet: {fileID: 3343821600205228281, guid: b9d5a1584e0ef7b4cb6e76f3def5bdcf, type: 3}
   point: {fileID: 920786061}
+--- !u!114 &313069515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6069416250568953312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d0ec75e0f4ab04b9f2af5bd42e8316, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 5a7896de04f013844bbdbb54a7581a57, type: 2}
 --- !u!1 &6239142192234912196
 GameObject:
   m_ObjectHideFlags: 0
@@ -3747,13 +3761,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a4719df0f823be41909f6e03a65e9f6, type: 3}
---- !u!1 &1459974296 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: 7a4719df0f823be41909f6e03a65e9f6, type: 3}
-  m_PrefabInstance: {fileID: 1459942968}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1459809464 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 7a4719df0f823be41909f6e03a65e9f6, type: 3}
+  m_PrefabInstance: {fileID: 1459942968}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1459974296 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 7a4719df0f823be41909f6e03a65e9f6, type: 3}
   m_PrefabInstance: {fileID: 1459942968}
   m_PrefabAsset: {fileID: 0}
