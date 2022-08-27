@@ -16,18 +16,20 @@ public class Shoot : MonoBehaviour
     private Vector3 _direction;
     private float tempCountDown;
     private void Start()
-    {
+    { 
         dataGun = GetComponent<GunManager>();
         _rigTranstion = GetComponent<RigTranstion>();
         _input = GetComponent<StarterAssetsInputs>();
         _ani = GetComponent<Animator>();
         tempCountDown = dataGun.GetDelayTimeShoot();
+        point = dataGun.GetPointPos();
     }
     private void Update()
     {
+        point = dataGun.GetPointPos();
         if (Input.GetMouseButton(0) && tempCountDown <= 0)
         {
-             Vector3 directionBullet = (_direction - point.position).normalized;
+            Vector3 directionBullet = (_direction - point.position).normalized;
             Transform bulletGameObject = Instantiate(bullet,point.position, Quaternion.LookRotation(directionBullet));
             Instantiate(muzzleEffect, point.position, Quaternion.LookRotation(directionBullet));
             bulletGameObject.GetComponent<Bullet>().SetForceValue(dataGun.GetForceValue());

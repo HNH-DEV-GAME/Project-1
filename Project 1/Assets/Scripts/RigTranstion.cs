@@ -25,16 +25,7 @@ public class RigTranstion : MonoBehaviour
     private void Start()
     {
         _rigBuilder = GetComponent<RigBuilder>();
-        _input = GetComponent<StarterAssetsInputs>();
-        //if (_stateCharacter.ToString() == StateCharacter.hasGunRun.ToString())
-        //{
-        //    _rigBuilder.layers[0].rig.weight = 1;
-        //    _rigBuilder.layers[1].rig.weight = 0;
-        //}else if(_stateCharacter.ToString() == StateCharacter.hasGunShoot.ToString())
-        //{
-        //    _rigBuilder.layers[0].rig.weight = 0;   
-        //    _rigBuilder.layers[1].rig.weight = 1;
-        //}
+        _input = GetComponent<StarterAssetsInputs>();  
     }
     // Update is called once per frame
     void Update()
@@ -42,15 +33,10 @@ public class RigTranstion : MonoBehaviour
         if (Input.GetMouseButton(1) || Input.GetMouseButton(0))
         {
             IsUpdateStateCharacter = true;
-            //_rigBuilder.layers[0].rig.weight = 0;
-            //_rigBuilder.layers[1].rig.weight = 1;
-
             _stateCharacter = StateCharacter.hasGunShoot;
         }
         else
-        {
-            //_rigBuilder.layers[0].rig.weight = 1;
-            //_rigBuilder.layers[1].rig.weight = 0;
+        {  
             IsUpdateStateCharacter = false;
             _stateCharacter = StateCharacter.hasGunRun;
         }

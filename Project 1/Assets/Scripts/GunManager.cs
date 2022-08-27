@@ -9,9 +9,9 @@ public class GunManager : MonoBehaviour
     [SerializeField] private List<Transform> guns;
     [SerializeField] private Transform gunParent;
     [SerializeField] private int levelGun;
+    private Transform point;
     private void Start()
     {
-        levelGun = 0;
         for (int i=0;i < gunParent.childCount;i++)
         {
             guns.Add(gunParent.GetChild(i).gameObject.transform);
@@ -21,6 +21,8 @@ public class GunManager : MonoBehaviour
             gun.gameObject.SetActive(false);
         }
         guns[levelGun].gameObject.SetActive(true);
+        point = guns[levelGun].GetComponent<Gun>().GetPointPos();
+        data = guns[levelGun].GetComponent<Gun>().GetDataGun();
     }
     private void Update()
     {
@@ -37,6 +39,8 @@ public class GunManager : MonoBehaviour
         {
             guns[levelGun - 1].gameObject.SetActive(false);
             guns[levelGun].gameObject.SetActive(true);
+            point = guns[levelGun].GetComponent<Gun>().GetPointPos();
+            data = guns[levelGun].GetComponent<Gun>().GetDataGun();
         }
         else
         {
@@ -51,5 +55,9 @@ public class GunManager : MonoBehaviour
     public int GetForceValue()
     {
         return data.force;
+    }
+    public Transform GetPointPos()
+    {
+        return point;
     }
 }
