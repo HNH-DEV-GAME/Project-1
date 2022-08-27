@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 478a16bdb135c0f4280980ba8c97c78b, type: 3}
-  m_Name: Aim
+  m_Name: Run
   m_EditorClassIdentifier: 
   name: 0
-  position: {x: 0.095, y: -0.095, z: 0.131}
-  Rotation: {x: -74.558, y: 256.501, z: -57.674}
+  position: {x: -0.03, y: -0.107, z: 0.095}
+  Rotation: {x: -26.456, y: 270.006, z: -170.151}
