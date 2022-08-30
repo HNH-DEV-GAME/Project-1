@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class PanelManager : MonoBehaviour
 {
-
-    private List<Panel> panels = new List<Panel>();
-    private void Start()
-    {
-        foreach (Panel panel in FindObjectsOfType<Panel>())
-        {
-            panels.Add(panel);
-        }
-    }
+    [Tooltip("Must be to correct order")]
+    [SerializeField] private List<Panel> panels; // must to correct order
 
     public void PanelActive(Panel.TypePanel typePanel)
     {
@@ -28,4 +21,17 @@ public class PanelManager : MonoBehaviour
             }
         }
     }
+    public void BackOnePanel()
+    {
+        foreach (Panel panel in panels)
+        {
+            if (panel.gameObject.activeSelf == true)
+            {
+                panel.gameObject.SetActive(false);
+                panels[panels.FindIndex(x => x.typePanel == panel.typePanel) - 1].gameObject.SetActive(true);
+                break;
+            }
+        }
+    }
 }
+

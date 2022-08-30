@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
-
+using Photon.Realtime;
 
 public class LobbyMain : MonoBehaviourPunCallbacks
 {
     private PanelManager _panelManager;
     [SerializeField] private TMP_InputField inputFieldName;
     [SerializeField] private TMP_Text nameDisplay;
+    [SerializeField] private TMP_InputField inputFieldRoomName;
+    [SerializeField] private TMP_InputField inputFieldAmountOfPlayer;
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -39,9 +41,26 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     #region UI CALLBACKS
     public void LoginButton()
     {
+        if (inputFieldName.text == "") return; 
         PhotonNetwork.NickName = inputFieldName.text;
         nameDisplay.text = "Name: " +inputFieldName.text;
         _panelManager.PanelActive(Panel.TypePanel.SelectionPanel);
+    }
+    public void CreateRoomButton()
+    {
+        if (inputFieldAmountOfPlayer.text == "" || inputFieldRoomName.text == "") return;
+        RoomOptions room = new RoomOptions();
+        room.PlayerTtl = 2000;
+        room.MaxPlayers = (byte)int.Parse(inputFieldAmountOfPlayer.text) < 4 ? (byte)int.Parse(inputFieldAmountOfPlayer.text) : (byte)4;
+        PhotonNetwork.CreateRoom(inputFieldRoomName.text,room);
+    }
+    public void ActiveCreateRoomPanel()
+    {
+        _panelManager.PanelActive(Panel.TypePanel.CreateRoomPanel);
+    }
+    public void CancelButton()
+    {
+        _panelManager.BackOnePanel();
     }
     #endregion
 }
