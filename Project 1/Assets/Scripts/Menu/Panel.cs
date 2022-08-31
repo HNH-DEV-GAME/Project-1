@@ -11,7 +11,10 @@ public class Panel : MonoBehaviour
         SelectionPanel,
         CreateRoomPanel,
         JoinRandomRoomPanel,
-        RoomListPanel
+        RoomListPanel,
+        InsideRoomPanel,
+        RandomRoomPanel,
+        ListRoomPanel
     }
     public TypePanel typePanel = new TypePanel();
     
