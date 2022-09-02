@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
+using Photon.Pun;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -123,10 +124,11 @@ namespace StarterAssets
 #endif
             }
         }
-
+        private PhotonView photonView;
 
         private void Awake()
         {
+            photonView = GetComponent<PhotonView>();
             // get a reference to our main camera
             if (_mainCamera == null)
             {
@@ -156,8 +158,8 @@ namespace StarterAssets
 
         private void Update()
         {
+            if (!photonView.IsMine) return;
             _hasAnimator = TryGetComponent(out _animator);
-
             JumpAndGravity();
             GroundedCheck();
             Move();
@@ -165,6 +167,7 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
+            if (!photonView.IsMine) return;
             CameraRotation();
         }
 

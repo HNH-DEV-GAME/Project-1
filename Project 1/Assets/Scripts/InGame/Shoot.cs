@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using StarterAssets;
-
+using Photon.Pun;
 public class Shoot : MonoBehaviour
 {
     [SerializeField] private Transform bullet;
@@ -15,8 +15,10 @@ public class Shoot : MonoBehaviour
 
     private Vector3 _direction;
     private float tempCountDown;
+    private PhotonView photonView;
     private void Start()
-    { 
+    {
+        photonView = GetComponent<PhotonView>();
         dataGun = GetComponent<GunManager>();
         _rigTranstion = GetComponent<RigTranstion>();
         _input = GetComponent<StarterAssetsInputs>();
@@ -26,6 +28,7 @@ public class Shoot : MonoBehaviour
     }
     private void Update()
     {
+        if (!photonView.IsMine) return;
         point = dataGun.GetPointPos();
         if (Input.GetMouseButton(0) && tempCountDown <= 0)
         {

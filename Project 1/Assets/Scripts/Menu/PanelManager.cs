@@ -16,6 +16,18 @@ public class PanelManager : MonoBehaviour
         get { return _instance; }
         set { _instance = value; }
     }
+    public void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     [Tooltip("Must be to correct order")]
     [SerializeField] private List<PanelType> panels; // must to correct order
 

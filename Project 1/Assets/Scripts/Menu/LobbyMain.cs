@@ -4,12 +4,15 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
+using System;
+using UnityEngine.SceneManagement;
 
 public class LobbyMain : MonoBehaviourPunCallbacks
 {
     private PanelManager _panelManager;
     [SerializeField] private TMP_InputField inputFieldName;
-    [SerializeField] private TMP_Text nameDisplay;
+    [SerializeField] private TMP_Text namePlayerDisplay;
+    [SerializeField] private TMP_Text nameRoomDisplay;
     [SerializeField] private TMP_InputField inputFieldRoomName;
     [SerializeField] private TMP_InputField inputFieldAmountOfPlayer;
     [SerializeField] private GameObject roomPrefab;
@@ -19,14 +22,15 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject ListPlayerPos;
 
+    [SerializeField] private GameObject buttonStart;
+
     private Dictionary<string,RoomInfo> cachedRoomList;
     private Dictionary<string, GameObject> roomListEntries;
-    private Dictionary<string, GameObject> playerListEntries;
+    private Dictionary<int, GameObject> playerListEntries;
     private void Awake()
     {
         cachedRoomList = new Dictionary<string, RoomInfo>();
         roomListEntries = new Dictionary<string,GameObject>();
-        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
     }
     private void Start()
@@ -73,19 +77,12 @@ public class LobbyMain : MonoBehaviourPunCallbacks
             roomListEntries.Add(info.Key, roomGameObject);
         }
     }
-    public void UpdatePlayerListView()
-    {
-        //foreach (var info in playerListEntries)
-        //{
-        //    GameObject playerGameObject = Instantiate(playerPrefab,ListPlayerPos.transform);
-        //    playerGameObject.GetComponent<PlayerList>().SetInfoPlayer(info.Value);
-        //}
-    }
     #endregion
 
     #region PUN CALLBACKS
     public override void OnConnectedToMaster()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.JoinLobby();
         print("Connected to server");
         _panelManager.PanelActive(Panel.TypePanel.LoadingPanel);
@@ -98,6 +95,23 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         _panelManager.PanelActive(Panel.TypePanel.LoginPanel);
         print("Joined to lobby");
     }
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        MasterClient(newMasterClient);
+    }
+
+    private void MasterClient(Player player)
+    {
+        if (!player.IsMasterClient)
+        {
+            buttonStart.SetActive(false);
+        }
+        else
+        {
+            buttonStart.SetActive(true);
+        }
+    }
+
     public override void OnLeftLobby()
     {
         cachedRoomList.Clear();
@@ -114,21 +128,24 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
+        nameRoomDisplay.text = "Room Name: " + PhotonNetwork.CurrentRoom.Name;
         cachedRoomList.Clear();
         if (playerListEntries == null)
         {
-            playerListEntries = new Dictionary<string, GameObject>();
+            playerListEntries = new Dictionary<int, GameObject>();
         }
         foreach (var player in PhotonNetwork.PlayerList)
         {
             GameObject playerGameObject = Instantiate(playerPrefab, ListPlayerPos.transform);
             playerGameObject.GetComponent<PlayerList>().SetInfoPlayer(player);
-            playerListEntries.Add(player.NickName, playerGameObject);
+            playerListEntries.Add(player.ActorNumber, playerGameObject);
+            MasterClient(player);
         }
-
+        _panelManager.PanelActive(Panel.TypePanel.InsideRoomPanel);
     }
     public override void OnLeftRoom()
     {
+        nameRoomDisplay.text = "";
         foreach (var player in playerListEntries.Values)
         {
             Destroy(player.gameObject);
@@ -138,15 +155,18 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        if (playerListEntries.ContainsKey(newPlayer.NickName)) return;
+        if (playerListEntries.ContainsKey(newPlayer.ActorNumber)) return;
         GameObject playerGameObject = Instantiate(playerPrefab,ListPlayerPos.transform);
         playerGameObject.GetComponent<PlayerList>().SetInfoPlayer(newPlayer);
-        playerListEntries.Add(newPlayer.NickName,playerGameObject); 
+        playerListEntries.Add(newPlayer.ActorNumber,playerGameObject);
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        Destroy(playerListEntries[otherPlayer.NickName]);
-        playerListEntries.Remove(otherPlayer.NickName);
+        if (playerListEntries.ContainsKey(otherPlayer.ActorNumber))
+        {
+            Destroy(playerListEntries[otherPlayer.ActorNumber].gameObject);
+            playerListEntries.Remove(otherPlayer.ActorNumber);
+        }
     }
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
@@ -160,7 +180,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         if (inputFieldName.text == "") return; 
         PhotonNetwork.NickName = inputFieldName.text;
-        nameDisplay.text = "Name: " +inputFieldName.text;
+        namePlayerDisplay.text = "Player Name: " +inputFieldName.text;
         _panelManager.PanelActive(Panel.TypePanel.SelectionPanel);
     }
     public void CreateRoomButton()
@@ -169,8 +189,16 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         RoomOptions room = new RoomOptions();
         room.PlayerTtl = 2000;
         room.MaxPlayers = (byte)int.Parse(inputFieldAmountOfPlayer.text) < 4 ? (byte)int.Parse(inputFieldAmountOfPlayer.text) : (byte)4;
-        PhotonNetwork.CreateRoom(inputFieldRoomName.text,room);  
-        _panelManager.PanelActive(Panel.TypePanel.InsideRoomPanel);
+        PhotonNetwork.CreateRoom(inputFieldRoomName.text,room);
+        nameRoomDisplay.text = "Room Name: " + inputFieldRoomName.text;
+        _panelManager.PanelActive(Panel.TypePanel.LoadingPanel);
+    }
+    public void StartGameButton()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SceneManager.LoadScene(1);
+        }
     }
     public void JoinRandomRoomButton()
     {

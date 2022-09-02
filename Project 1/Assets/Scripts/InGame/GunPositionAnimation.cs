@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class GunPositionAnimation : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class GunPositionAnimation : MonoBehaviour
     private void Start()
     {
         rigTranstion = GameObject.FindGameObjectWithTag("Player").GetComponent<RigTranstion>();
-
     }
     private void Update()
     {
