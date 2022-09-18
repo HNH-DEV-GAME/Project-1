@@ -39,6 +39,14 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - DestroyBullet
+  - DestroyImpactGameObject
+  - DestroyGO
+  - DestroyMuzzleFlash
+  - InstantiateMuzzle
+  - SpawnMuzzleEffect
+  - RPC_SpawnMuzzleEffect
+  - HandleBullet
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

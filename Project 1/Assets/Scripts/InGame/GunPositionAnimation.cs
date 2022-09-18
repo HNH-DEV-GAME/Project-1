@@ -7,13 +7,18 @@ public class GunPositionAnimation : MonoBehaviour
 {
     [SerializeField] private ScriptableObjectGunPos[] data;
     private RigTranstion rigTranstion;
-
+    private PhotonView pv;
     private void Start()
     {
-        rigTranstion = GameObject.FindGameObjectWithTag("Player").GetComponent<RigTranstion>();
+        pv = GetComponent<PhotonView>();
+        rigTranstion = GetComponentInParent<RigTranstion>();
     }
     private void Update()
     {
+        if (!pv.IsMine)
+        {
+            return;
+        }
         if (rigTranstion._stateCharacter.ToString() == RigTranstion.StateCharacter.hasGunShoot.ToString())
         {
             transform.localPosition = data[1].position;

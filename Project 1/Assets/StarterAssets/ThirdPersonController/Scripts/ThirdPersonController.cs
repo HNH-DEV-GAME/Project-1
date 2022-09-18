@@ -158,8 +158,8 @@ namespace StarterAssets
 
         private void Update()
         {
-            if (!photonView.IsMine) return;
             _hasAnimator = TryGetComponent(out _animator);
+            if (!photonView.IsMine) return;
             JumpAndGravity();
             GroundedCheck();
             Move();
@@ -187,7 +187,6 @@ namespace StarterAssets
                 transform.position.z);
             Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
                 QueryTriggerInteraction.Ignore);
-
             // update animator if using character
             if (_hasAnimator)
             {

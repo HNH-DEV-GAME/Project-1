@@ -10,7 +10,7 @@ public class RigTranstion : MonoBehaviour
     [SerializeField] private RigBuilder _rigBuilder;
 
     private StarterAssetsInputs _input;
-
+    private PhotonView pv;
     public enum StateCharacter 
     { 
         nothing,
@@ -18,12 +18,9 @@ public class RigTranstion : MonoBehaviour
         hasGunShoot,
     }
     [SerializeField] public StateCharacter _stateCharacter; // Set Null
-    private void Awake()
-    {
-        
-    }
     private void Start()
     {
+        pv = GetComponent<PhotonView>();
         _rigBuilder = GetComponent<RigBuilder>();
         _input = GetComponent<StarterAssetsInputs>();
         Cursor.lockState = CursorLockMode.None;
@@ -31,6 +28,7 @@ public class RigTranstion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!pv.IsMine) return;
         if (Input.GetMouseButton(1) || Input.GetMouseButton(0))
         {
             _stateCharacter = StateCharacter.hasGunShoot;

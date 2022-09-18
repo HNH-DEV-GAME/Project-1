@@ -15,6 +15,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         get { return _instance; }
         set { _instance = value; }
     }
+    [SerializeField] private Transform[] spawnPos;
     public void Awake()
     {
         if (_instance == null)
@@ -27,6 +28,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
             Destroy(gameObject);
         }
         pv = GetComponent<PhotonView>();
+        foreach (var point in spawnPos)
+        {
+            point.GetComponent<MeshRenderer>().enabled = false;
+        }
     }
     #endregion
     PhotonView pv;
@@ -43,7 +48,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         if (SceneManager.GetActiveScene().buildIndex == 1)
         {    
-            PhotonNetwork.Instantiate("Player", new Vector3(1, 1, 1), Quaternion.identity);
+            PhotonNetwork.Instantiate("Player",spawnPos[0].position, Quaternion.identity);
         }
     }
     public override void OnDisconnected(DisconnectCause cause)

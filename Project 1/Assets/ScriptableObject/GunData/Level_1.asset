@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Level_1
   m_EditorClassIdentifier: 
   delayTimeShoot: 0.4
-  force: 4
+  force: 1

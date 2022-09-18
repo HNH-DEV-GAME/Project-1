@@ -269,6 +269,7 @@ MonoBehaviour:
   data:
   - {fileID: 11400000, guid: 51e47b1a5c11eca47b30e80b8a740b71, type: 2}
   - {fileID: 11400000, guid: 73fd0f4f6556acb44adcf950d37e3462, type: 2}
+  rigTranstion: {fileID: 0}
 --- !u!114 &208863295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2393,7 +2394,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b3a1aed39537f45b4a7e6358fe1e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 0}
+  _cameraAim: {fileID: 0}
+  _cameraFollow: {fileID: 0}
   SensitivityCamera: 2
   aimColliderLayerMask:
     serializedVersion: 2
@@ -4043,6 +4045,10 @@ PrefabInstance:
       value: -57.594
       objectReference: {fileID: 0}
     - target: {fileID: 1924830153, guid: f4124e7a3d404d14ab4a08baaf7af4d3, type: 3}
+      propertyPath: rigTranstion
+      value: 
+      objectReference: {fileID: 1919400786}
+    - target: {fileID: 1924830153, guid: f4124e7a3d404d14ab4a08baaf7af4d3, type: 3}
       propertyPath: data.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 2fa0c3aec5cf4f742860dc99183beaad, type: 2}
@@ -4229,6 +4235,10 @@ PrefabInstance:
       value: -300.401
       objectReference: {fileID: 0}
     - target: {fileID: 345851198, guid: 98b632a75b41327478de878cae51d29c, type: 3}
+      propertyPath: rigTranstion
+      value: 
+      objectReference: {fileID: 1919400786}
+    - target: {fileID: 345851198, guid: 98b632a75b41327478de878cae51d29c, type: 3}
       propertyPath: data.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 9cc0e43a6158e3642b4db7e37ad95742, type: 2}
@@ -4390,6 +4400,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 448.823
       objectReference: {fileID: 0}
+    - target: {fileID: 426003937, guid: bab3ef0827d037c4a90ff03adfb5ed9c, type: 3}
+      propertyPath: rigTranstion
+      value: 
+      objectReference: {fileID: 1919400786}
     - target: {fileID: 426003937, guid: bab3ef0827d037c4a90ff03adfb5ed9c, type: 3}
       propertyPath: data.Array.data[0]
       value: 
