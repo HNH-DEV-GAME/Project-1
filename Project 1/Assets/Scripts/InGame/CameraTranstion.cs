@@ -17,6 +17,7 @@ public class CameraTranstion : MonoBehaviour
     private Vector3 mouseWorldPosition = Vector3.zero;
     private Shoot _shoot;
     private PhotonView pv;
+    private CinemachineVirtualCamera camDied;
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
@@ -62,5 +63,13 @@ public class CameraTranstion : MonoBehaviour
             thirdPersonController.SetSensitivityCamera(1);
         }
         _shoot.SetMousePos(mouseWorldPosition);
+    }
+    public void SetCamDied(CinemachineVirtualCamera cam)
+    {
+        camDied = cam;
+    }
+    public CinemachineVirtualCamera GetCamera()
+    {
+        return _cameraFollow;
     }
 }

@@ -47,6 +47,12 @@ MonoBehaviour:
   - SpawnMuzzleEffect
   - RPC_SpawnMuzzleEffect
   - HandleBullet
+  - SetValueKillFeed
+  - HandleAfterKillPlayer
+  - FinalPhase
+  - PrintText
+  - HandleDied
+  - RemoveBody
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

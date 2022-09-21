@@ -94,6 +94,8 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         ClearRoomListView();
         _panelManager.PanelActive(Panel.TypePanel.LoginPanel);
         print("Joined to lobby");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
@@ -152,6 +154,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         }
         playerListEntries.Clear();
         playerListEntries = null;
+        
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {

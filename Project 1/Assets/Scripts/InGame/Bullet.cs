@@ -34,6 +34,7 @@ public class Bullet : MonoBehaviour
                     impactGameObject = Instantiate(impactEffect[0], hit.point, Quaternion.LookRotation(direction));
                     hit.transform.GetComponent<CharacterController>().Move(direction * _force );
                     hit.transform.GetComponent<PlayerManager>().SetIDPlayerIsShooted(IDPlayer);
+                    hit.transform.GetComponent<Animator>().SetTrigger("TakeDamage");
                 }
                 else if (hit.collider.GetComponent<ObstacleType>().GetObstacleType() == ObstacleTypes.Wall)
                 {

@@ -8,8 +8,10 @@ using UnityEngine;
 public class DisplayPlayerName : MonoBehaviour
 {
     CinemachineVirtualCamera cam;
+    Camera camFly;
     [SerializeField] private PhotonView pv;
     [SerializeField] private TMP_Text text;
+    public bool switchCam;
     void Awake()
     {
         pv = gameObject.GetComponentInParent<PhotonView>();
@@ -30,8 +32,19 @@ public class DisplayPlayerName : MonoBehaviour
 
         if (cam == null)
             return;
-
-        transform.LookAt(cam.transform);
-        transform.Rotate(Vector3.up * 180);
+        if (switchCam)
+        {
+            transform.LookAt(camFly.transform);
+            transform.Rotate(Vector3.up * 180);
+        }
+        else
+        {
+            transform.LookAt(cam.transform);
+            transform.Rotate(Vector3.up * 180);
+        }
+    }
+    public void SetCamFly(Camera camFly)
+    {
+        this.camFly = camFly;
     }
 }

@@ -18,14 +18,14 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private Transform[] spawnPos;
     public void Awake()
     {
-        if (_instance == null)
+        if (_instance != null)
         {
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            DontDestroyOnLoad(gameObject);
+            _instance = this;
         }
         pv = GetComponent<PhotonView>();
         foreach (var point in spawnPos)
@@ -47,8 +47,12 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (SceneManager.GetActiveScene().buildIndex == 1)
-        {    
+        {
             PhotonNetwork.Instantiate("Player",spawnPos[0].position, Quaternion.identity);
+        }
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            Destroy(gameObject);
         }
     }
     public override void OnDisconnected(DisconnectCause cause)
@@ -59,6 +63,5 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.Disconnect();
     }
-
 
 }

@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
@@ -12,9 +13,9 @@ public class GunManager : MonoBehaviourPunCallbacks
     [SerializeField] private List<Transform> guns;
     [SerializeField] private Transform gunParent;
     [SerializeField] private int levelGun;
+    [SerializeField] private TMP_Text levelGunText;
     private Transform point;
     private PhotonView pv;
-    public bool trigger = false;
     private void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -29,19 +30,27 @@ public class GunManager : MonoBehaviourPunCallbacks
         guns[levelGun].gameObject.SetActive(true);
         point = guns[levelGun].GetComponent<Gun>().GetPointPos();
         data = guns[levelGun].GetComponent<Gun>().GetDataGun();
+        if (!pv.IsMine)
+        {
+            levelGunText.text = "";
+            return;
+        }
+        levelGunText.text = "LEVEL " + (levelGun + 1).ToString();
     }
     private void Update()
     {
         if (!pv.IsMine) return;
-        if (Input.GetKeyDown(KeyCode.U) || trigger == true)
+        if (levelGun >= guns.Count)
+        {
+            GameManager.Instance.FinalPhase();
+        }
+        if (Input.GetKeyDown(KeyCode.U))
         {
             UpgradeGun();
-            trigger = false;
         }
     }
     public void UpgradeGun()
     {
-        if (levelGun > guns.Count) { return; }
         levelGun++;
         Hashtable hash = new Hashtable();
         hash.Add("GunLevel", levelGun);
@@ -56,10 +65,20 @@ public class GunManager : MonoBehaviourPunCallbacks
     }
     private void UpgradeGunLevel(int levelGun)
     {
+        if (levelGun >= guns.Count)
+        {
+            return;
+        }
         guns[levelGun - 1].gameObject.SetActive(false);
         guns[levelGun].gameObject.SetActive(true);
         point = guns[levelGun].GetComponent<Gun>().GetPointPos();
         data = guns[levelGun].GetComponent<Gun>().GetDataGun();
+        if (!pv.IsMine)
+        {
+            levelGunText.text = "";
+            return;
+        }
+        levelGunText.text = "LEVEL " + (levelGun + 1).ToString();
     }
     public float GetDelayTimeShoot()
     {
@@ -72,5 +91,9 @@ public class GunManager : MonoBehaviourPunCallbacks
     public Transform GetPointPos()
     {
         return point;
+    }
+    public int GetLevelGun()
+    {
+        return levelGun;
     }
 }
