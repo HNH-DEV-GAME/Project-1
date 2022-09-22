@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using DG.Tweening;
 
 public class GunManager : MonoBehaviourPunCallbacks
 {
@@ -65,7 +66,7 @@ public class GunManager : MonoBehaviourPunCallbacks
     }
     private void UpgradeGunLevel(int levelGun)
     {
-        if (levelGun >= guns.Count)
+        if (levelGun >= guns.Count || GameManager.Instance.GetIsFinished())
         {
             return;
         }

@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour
         flyCamera.enabled = false;
     }
     public void Update()
-    {
+    {  
         if (trigger)
         {
             countDown -= Time.deltaTime;
@@ -68,6 +68,14 @@ public class PlayerManager : MonoBehaviour
             {
                 transform.position = new Vector3(11, 22, -15f);
             }
+        }
+        if (GameManager.Instance.GetIsChating())
+        {
+            gameObject.GetComponent<ThirdPersonController>().enabled = false;
+        }
+        else
+        {
+            gameObject.GetComponent<ThirdPersonController>().enabled = true;
         }
     }
     [PunRPC]

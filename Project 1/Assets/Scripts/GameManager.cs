@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviourPunCallbacks
@@ -30,31 +31,43 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
     #endregion
     [SerializeField] private TMP_Text notificationText;
-    [SerializeField] private Button leaveButton;
+    [SerializeField] private GameObject leaveText;
     public bool finalPhase = false;
     private PhotonView pv;
     public int playerStillLive;
     private string namePlayerWinner;
     private bool isFinished = false;
+    private bool isChating = false;
     private void Start()
     {
         notificationText.text = "";
+        notificationText.GetComponent<DOTweenAnimation>().enabled = false;
         pv = GetComponent<PhotonView>();
         playerStillLive = PhotonNetwork.CurrentRoom.PlayerCount;
-        leaveButton.gameObject.SetActive(false);
+        leaveText.SetActive(false);
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L) && isFinished)
         {
-            leaveButton.onClick.Invoke();
+            LeaveRoom();
         }
     }
     [PunRPC]
-    public void PrintText(string content,bool finalPhase)
+    public void PrintText(string content,bool finalPhase,bool trigger, bool isFinished)
     {
-        notificationText.text = content;
         this.finalPhase = finalPhase;
+        this.isFinished = isFinished;
+        notificationText.text = content;
+        if (finalPhase)
+        {
+            notificationText.transform.DOShakePosition(1,1, 47, 90, false, true).SetLoops(-1, LoopType.Restart);
+        }
+        else
+        {
+            notificationText.color = new Color32(59, 250, 0, 255);
+        }
+        leaveText.SetActive(trigger);
     }
     public void FinalPhase()
     {
@@ -67,14 +80,12 @@ public class GameManager : MonoBehaviourPunCallbacks
                     namePlayerWinner = player.GetComponent<PlayerManager>().GetName();
                 }
             }
-            pv.RPC("PrintText", RpcTarget.All, "The Winner is " + namePlayerWinner,false);
-            leaveButton.gameObject.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            pv.RPC("PrintText", RpcTarget.All, "The Winner is " + namePlayerWinner,false,true,true);  
+            isFinished = true;
         }
         else
         {
-            pv.RPC("PrintText", RpcTarget.All, "KILL THEMM !!!",true);
+            pv.RPC("PrintText", RpcTarget.All, "KILL THEMM !!!",true,false,false);
         }
     }
     public void LeaveRoom()
@@ -88,5 +99,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         SceneManager.LoadScene(0);
+    }
+    public bool GetIsFinished()
+    {
+        return isFinished;
+    }
+    public void SetIsChating(bool value)
+    {
+        isChating = value;
+    }
+    public bool GetIsChating()
+    {
+        return isChating;
     }
 }
