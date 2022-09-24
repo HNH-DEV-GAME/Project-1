@@ -162,6 +162,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
         GameObject playerGameObject = Instantiate(playerPrefab,ListPlayerPos.transform);
         playerGameObject.GetComponent<PlayerList>().SetInfoPlayer(newPlayer);
         playerListEntries.Add(newPlayer.ActorNumber,playerGameObject);
+        FindObjectOfType<ChatManager>().NotificationJoinRoom(newPlayer);
     }
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
@@ -190,7 +191,7 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         if (inputFieldAmountOfPlayer.text == "" || inputFieldRoomName.text == "") return;
         RoomOptions room = new RoomOptions();
-        room.PlayerTtl = 2000;
+        room.PlayerTtl = 0;
         room.MaxPlayers = (byte)int.Parse(inputFieldAmountOfPlayer.text) < 4 ? (byte)int.Parse(inputFieldAmountOfPlayer.text) : (byte)4;
         PhotonNetwork.CreateRoom(inputFieldRoomName.text,room);
         nameRoomDisplay.text = "Room Name: " + inputFieldRoomName.text;
@@ -200,7 +201,10 @@ public class LobbyMain : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            SceneManager.LoadScene(1);
+            int index = FindObjectOfType<RoomGameOptions>().GetIndexMap();
+            SceneManager.LoadScene(index + 1);
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.CurrentRoom.IsVisible = false;
         }
     }
     public void JoinRandomRoomButton()

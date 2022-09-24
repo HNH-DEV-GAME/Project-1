@@ -1,12 +1,9 @@
 using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -34,7 +31,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject leaveText;
     public bool finalPhase = false;
     private PhotonView pv;
-    public int playerStillLive;
+    //IN-GAME
+    private int playerStillLive;
+    //----
+    //IN ROOM
+    //---
     private string namePlayerWinner;
     private bool isFinished = false;
     private bool isChating = false;
@@ -48,6 +49,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
     private void Update()
     {
+        if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
+        {
+            PrintText("The Winner is " + pv.Owner.NickName, false, true, true);
+        }
         if (Input.GetKeyDown(KeyCode.L) && isFinished)
         {
             LeaveRoom();
@@ -85,9 +90,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            pv.RPC("PrintText", RpcTarget.All, "KILL THEMM !!!",true,false,false);
+            pv.RPC("PrintText", RpcTarget.All, "KILL THEM !!!",true,false,false);
         }
     }
+
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
@@ -111,5 +117,13 @@ public class GameManager : MonoBehaviourPunCallbacks
     public bool GetIsChating()
     {
         return isChating;
+    }
+    public void DecreasePlayer()
+    {
+        playerStillLive--;
+    }
+    public int GetAmountOfPlayerStillLive()
+    {
+        return playerStillLive;
     }
 }

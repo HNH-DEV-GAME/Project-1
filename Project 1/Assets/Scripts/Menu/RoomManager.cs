@@ -46,7 +46,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1)
+        if (SceneManager.GetActiveScene().buildIndex > 0)
         {
             PhotonNetwork.Instantiate("Player",spawnPos[0].position, Quaternion.identity);
         }

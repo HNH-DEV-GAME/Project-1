@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -21,16 +22,22 @@ public class PlayerManager : MonoBehaviour
     string killerName;
     string victimName;
     private bool isDied = false;
+    private ChatManager chatManager;
     private void Start()
     {
         idPlayer = -1;
         pv = GetComponent<PhotonView>();
         countDown = timeToRemoveIdPlayer;
+        chatManager = FindObjectOfType<ChatManager>().GetComponent<ChatManager>();
         killPanelManager = FindObjectOfType<KillPanelManager>().GetComponent<KillPanelManager>();
         flyCamera.enabled = false;
     }
     public void Update()
-    {  
+    {
+        if (Input.GetKeyDown(KeyCode.Return) && chatManager.IsDisplayed())
+        {
+            chatManager.SetValueOfChat(pv.Owner.NickName);
+        }
         if (trigger)
         {
             countDown -= Time.deltaTime;
@@ -50,7 +57,7 @@ public class PlayerManager : MonoBehaviour
             }
             if (GameManager.Instance.finalPhase == true)
             {
-                GameManager.Instance.playerStillLive--;
+                GameManager.Instance.DecreasePlayer();
                 pv.RPC("RemoveBody",RpcTarget.All);
                 if (!pv.IsMine) return;
                 FindObjectOfType<DisplayPlayerName>().SetCamFly(flyCamera);
@@ -69,13 +76,14 @@ public class PlayerManager : MonoBehaviour
                 transform.position = new Vector3(11, 22, -15f);
             }
         }
+        if (!pv.IsMine) return;
         if (GameManager.Instance.GetIsChating())
         {
-            gameObject.GetComponent<ThirdPersonController>().enabled = false;
+            gameObject.GetComponent<PlayerInput>().enabled = false;
         }
         else
         {
-            gameObject.GetComponent<ThirdPersonController>().enabled = true;
+            gameObject.GetComponent<PlayerInput>().enabled = true;
         }
     }
     [PunRPC]
