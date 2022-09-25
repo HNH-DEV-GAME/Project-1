@@ -14,41 +14,48 @@ public class Bullet : MonoBehaviour
     private PhotonView pv;
     private void Start()
     {
-        Destroy(gameObject,2);
         pv = GetComponent<PhotonView>();
        
     }
+    private void OnEnable()
+    {
+        Invoke("Hide",2);
+    }
+    private IEnumerator DestroyGameObject(float time,GameObject obj)
+    {
+        yield return new WaitForSeconds(time);
+        Destroy(obj);
+    }
     private void Update()
     {
-        transform.Translate(Vector3.forward * 100 * Time.deltaTime * _forceLocal);
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 10, layer))
         {
+            print(hit.collider.name);
             Vector3 direction = (-transform.position + hit.transform.position).normalized;
             if (hit.collider.GetComponent<ObstacleType>() != null)
             {
-                Transform impactGameObject;
-                gameObject.GetComponent<MeshRenderer>().enabled = false;    
+                print(hit.collider.name);
                 if (hit.collider.GetComponent<ObstacleType>().GetObstacleType() == ObstacleTypes.Human)
                 {
-                    impactGameObject = Instantiate(impactEffect[0], hit.point, Quaternion.LookRotation(direction));
-                    hit.transform.GetComponent<CharacterController>().Move(direction * _force );
+                    ObjectPooler.Instance.SpawnObjectPool(ObjectPooler.TypeObjectPool.humanImpact, hit.point, Quaternion.LookRotation(direction));
+                    hit.transform.GetComponent<CharacterController>().Move(direction * _force);
                     hit.transform.GetComponent<PlayerManager>().SetIDPlayerIsShooted(IDPlayer);
                     hit.transform.GetComponent<Animator>().SetTrigger("TakeDamage");
                 }
                 else if (hit.collider.GetComponent<ObstacleType>().GetObstacleType() == ObstacleTypes.Wall)
                 {
-                    impactGameObject = Instantiate(impactEffect[1], hit.point, Quaternion.LookRotation(direction));
+                    ObjectPooler.Instance.SpawnObjectPool(ObjectPooler.TypeObjectPool.rockImpact,hit.collider.transform.position, Quaternion.LookRotation(direction));
                 }
                 else if (hit.collider.GetComponent<ObstacleType>().GetObstacleType() == ObstacleTypes.Wood)
                 {
-                    impactGameObject = Instantiate(impactEffect[2], hit.point, Quaternion.LookRotation(direction));
+                    ObjectPooler.Instance.SpawnObjectPool(ObjectPooler.TypeObjectPool.woodImpact, hit.point, Quaternion.LookRotation(direction));
                 }
                 else
                 {
-                    impactGameObject = Instantiate(impactEffect[3], hit.point, Quaternion.LookRotation(direction));
+                    ObjectPooler.Instance.SpawnObjectPool(ObjectPooler.TypeObjectPool.rockImpact, hit.point, Quaternion.LookRotation(direction));
                 }
-                impactGameObject.SetParent(gameObject.transform);
+
             }
             if (hit.collider.tag == "Obstacle")
             {
@@ -56,7 +63,11 @@ public class Bullet : MonoBehaviour
                 hit.transform.GetComponent<Rigidbody>().AddForce(direction * _force * Time.deltaTime, ForceMode.Impulse);
             }
             _forceLocal = 0;
-            Destroy(gameObject, 0.2f);
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            transform.Translate(Vector3.forward * 100 * Time.deltaTime * _force);
         }
     }
     
@@ -67,5 +78,9 @@ public class Bullet : MonoBehaviour
     public void SetIDPlayer(int id)
     {
         IDPlayer = id;
+    }
+    private void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }

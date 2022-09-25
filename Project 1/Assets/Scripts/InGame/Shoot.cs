@@ -33,20 +33,21 @@ public class Shoot : MonoBehaviour
         if (Input.GetMouseButton(0) && tempCountDown <= 0)
         {
             Vector3 directionBullet = (_direction - point.position).normalized;
-            photonView.RPC("RPC_SpawnMuzzleEffect", RpcTarget.All, directionBullet);
+            photonView.RPC("RPC_HandleShoot", RpcTarget.All, directionBullet);
             tempCountDown = dataGun.GetDelayTimeShoot();
             _ani.SetBool("Shoot",true);
-        }else
+        }
+        else
         {
             tempCountDown -= Time.deltaTime;
             _ani.SetBool("Shoot",false);
         }
     }
     [PunRPC]
-    public void RPC_SpawnMuzzleEffect(Vector3 directionBullet)
+    public void RPC_HandleShoot(Vector3 directionBullet)
     {
-        Instantiate(muzzleEffect,point.position,Quaternion.LookRotation(directionBullet));
-        Transform bulletGameObject = Instantiate(bullet, point.position, Quaternion.LookRotation(directionBullet));
+        GameObject bulletGameObject = ObjectPooler.Instance.SpawnObjectPool(ObjectPooler.TypeObjectPool.Bullet,point.position,Quaternion.LookRotation(directionBullet));
+        ObjectPooler.Instance.SpawnObjectPool(ObjectPooler.TypeObjectPool.MuzzleEffect, point.position, Quaternion.LookRotation(directionBullet));
         bulletGameObject.GetComponent<Bullet>().SetForceValue(dataGun.GetForceValue());
         bulletGameObject.GetComponent<Bullet>().SetIDPlayer(photonView.ViewID);
     }
