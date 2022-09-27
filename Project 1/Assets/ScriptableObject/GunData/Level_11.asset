@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f3f263979cec3489ffd6d2b9370a66, type: 3}
   m_Name: Level_11
   m_EditorClassIdentifier: 
+  name: Gatling gun
   delayTimeShoot: 0.07
   force: 4
+  audio: {fileID: 8300000, guid: 5d2b7363a9bb75a47bcf0bea4c70343d, type: 3}

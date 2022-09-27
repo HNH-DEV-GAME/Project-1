@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f3f263979cec3489ffd6d2b9370a66, type: 3}
   m_Name: Level_6
   m_EditorClassIdentifier: 
+  name: assault rifle
   delayTimeShoot: 0.25
   force: 7
+  audio: {fileID: 8300000, guid: 79770a998a486764bb0b14425d7d958a, type: 3}

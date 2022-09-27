@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 81
   impactEffect:
   - {fileID: 451184, guid: e3c9439885f011549a6460a1f4da82dc, type: 3}
   - {fileID: 408086, guid: 547c2e12da8d4214098216299e70a3ba, type: 3}

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f3f263979cec3489ffd6d2b9370a66, type: 3}
   m_Name: Level_5
   m_EditorClassIdentifier: 
+  name: Field Rifle
   delayTimeShoot: 0.5
   force: 9
+  audio: {fileID: 8300000, guid: 3f2a726b0b1485a49a914acbfd186148, type: 3}

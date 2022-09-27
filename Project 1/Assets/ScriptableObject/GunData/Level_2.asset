@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f3f263979cec3489ffd6d2b9370a66, type: 3}
   m_Name: Level_2
   m_EditorClassIdentifier: 
+  name: Czech Machine
   delayTimeShoot: 0.08
   force: 2
+  audio: {fileID: 8300000, guid: 457d25f55f8f3f144af2266cf7d138f0, type: 3}

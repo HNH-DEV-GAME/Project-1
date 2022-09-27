@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f3f263979cec3489ffd6d2b9370a66, type: 3}
   m_Name: Level_3
   m_EditorClassIdentifier: 
+  name: Submachine Gun
   delayTimeShoot: 0.07
   force: 3
+  audio: {fileID: 8300000, guid: 7c467a441826db64e93c7f7ef0c276d5, type: 3}

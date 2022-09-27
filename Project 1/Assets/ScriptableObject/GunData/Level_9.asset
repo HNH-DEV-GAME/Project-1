@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f3f263979cec3489ffd6d2b9370a66, type: 3}
   m_Name: Level_9
   m_EditorClassIdentifier: 
+  name: Shootgun
   delayTimeShoot: 0.4
   force: 16
+  audio: {fileID: 8300000, guid: f90272243c5badb44b678ac63a54d2df, type: 3}

@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour
         countDown = timeToRemoveIdPlayer;
         chatManager = FindObjectOfType<ChatManager>().GetComponent<ChatManager>();
         killPanelManager = FindObjectOfType<KillPanelManager>().GetComponent<KillPanelManager>();
-        flyCamera.enabled = false;
+        flyCamera.gameObject.SetActive(false);
     }
     public void Update()
     {
@@ -67,7 +67,7 @@ public class PlayerManager : MonoBehaviour
                 gameObject.GetComponent<Shoot>().enabled = false;
                 gameObject.GetComponent<CameraTranstion>().enabled = false;
                 flyCamera.transform.localPosition = gameObject.transform.position;
-                flyCamera.enabled = true;
+                flyCamera.gameObject.SetActive(true);
                 gameObject.GetComponent<PlayerManager>().enabled = false;
                 isDied = true;
             }

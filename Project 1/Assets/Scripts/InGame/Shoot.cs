@@ -50,6 +50,7 @@ public class Shoot : MonoBehaviour
         ObjectPooler.Instance.SpawnObjectPool(ObjectPooler.TypeObjectPool.MuzzleEffect, point.position, Quaternion.LookRotation(directionBullet));
         bulletGameObject.GetComponent<Bullet>().SetForceValue(dataGun.GetForceValue());
         bulletGameObject.GetComponent<Bullet>().SetIDPlayer(photonView.ViewID);
+        AudioManager.Instance.AudioInteract(dataGun.GetAudioGun());
     }
     public void SetMousePos(Vector3 direction)
     {

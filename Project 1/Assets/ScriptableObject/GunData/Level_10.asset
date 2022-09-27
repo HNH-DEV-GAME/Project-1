@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f3f263979cec3489ffd6d2b9370a66, type: 3}
   m_Name: Level_10
   m_EditorClassIdentifier: 
+  name: Bazzet
   delayTimeShoot: 1
   force: 30
+  audio: {fileID: 8300000, guid: 0b0651b30b106864da0c68fd4bd5ffe6, type: 3}

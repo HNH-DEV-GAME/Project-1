@@ -66,7 +66,7 @@ public class GunManager : MonoBehaviourPunCallbacks
     }
     private void UpgradeGunLevel(int levelGun)
     {
-        if (levelGun >= guns.Count || GameManager.Instance.GetIsFinished())
+        if (levelGun >= guns.Count /*|| GameManager.Instance.GetIsFinished()*/)
         {
             return;
         }
@@ -88,6 +88,10 @@ public class GunManager : MonoBehaviourPunCallbacks
     public int GetForceValue()
     {
         return data.force;
+    }
+    public AudioClip GetAudioGun()
+    {
+        return data.audio;
     }
     public Transform GetPointPos()
     {

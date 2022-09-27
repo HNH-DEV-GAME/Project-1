@@ -3,6 +3,7 @@
 //                        (c) 2019 Sergey Stafeyev                           //
 //===========================================================================//
 
+using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
@@ -87,7 +88,8 @@ public class FreeFlyCamera : MonoBehaviour
 
     private Vector3 _initPosition;
     private Vector3 _initRotation;
-
+    private PhotonView pv;
+    [SerializeField] private ParticleSystem shape;
 #if UNITY_EDITOR
     private void OnValidate()
     {
@@ -97,18 +99,21 @@ public class FreeFlyCamera : MonoBehaviour
 #endif
 
 
-    private void Start()
+    private void Awake()
     {
         _initPosition = transform.position;
         _initRotation = transform.eulerAngles;
+        pv = GetComponent<PhotonView>();
     }
 
     private void OnEnable()
     {
+        pv.RPC("RPC_SpawnSoul", RpcTarget.All);
         if (_active)
+        {
             _wantedMode = CursorLockMode.Locked;
+        }
     }
-
     // Apply requested cursor state
     private void SetCursorState()
     {
@@ -214,5 +219,12 @@ public class FreeFlyCamera : MonoBehaviour
             transform.position = _initPosition;
             transform.eulerAngles = _initRotation;
         }
+    }
+    [PunRPC]
+    private void RPC_SpawnSoul()
+    {
+        var obj = Instantiate(shape,transform.position,Quaternion.identity);
+        obj.gameObject.transform.SetParent(gameObject.transform);
+        obj.Play();
     }
 }

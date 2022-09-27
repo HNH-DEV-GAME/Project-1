@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f3f263979cec3489ffd6d2b9370a66, type: 3}
   m_Name: Level_4
   m_EditorClassIdentifier: 
+  name: AGU
   delayTimeShoot: 0.3
   force: 7
+  audio: {fileID: 8300000, guid: bda95cdd54236574390ac6e79022dccd, type: 3}

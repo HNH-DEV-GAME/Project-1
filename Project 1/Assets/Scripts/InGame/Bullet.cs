@@ -31,11 +31,10 @@ public class Bullet : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 10, layer))
         {
-            print(hit.collider.name);
             Vector3 direction = (-transform.position + hit.transform.position).normalized;
             if (hit.collider.GetComponent<ObstacleType>() != null)
             {
-                print(hit.collider.name);
+                AudioManager.Instance.AudioInteract(hit.collider.GetComponent<ObstacleType>().GetAudio());
                 if (hit.collider.GetComponent<ObstacleType>().GetObstacleType() == ObstacleTypes.Human)
                 {
                     ObjectPooler.Instance.SpawnObjectPool(ObjectPooler.TypeObjectPool.humanImpact, hit.point, Quaternion.LookRotation(direction));
@@ -45,11 +44,15 @@ public class Bullet : MonoBehaviour
                 }
                 else if (hit.collider.GetComponent<ObstacleType>().GetObstacleType() == ObstacleTypes.Wall)
                 {
-                    ObjectPooler.Instance.SpawnObjectPool(ObjectPooler.TypeObjectPool.rockImpact,hit.collider.transform.position, Quaternion.LookRotation(direction));
+                    ObjectPooler.Instance.SpawnObjectPool(ObjectPooler.TypeObjectPool.rockImpact, hit.point, Quaternion.LookRotation(direction));
                 }
                 else if (hit.collider.GetComponent<ObstacleType>().GetObstacleType() == ObstacleTypes.Wood)
                 {
                     ObjectPooler.Instance.SpawnObjectPool(ObjectPooler.TypeObjectPool.woodImpact, hit.point, Quaternion.LookRotation(direction));
+                }
+                else if(hit.collider.GetComponent<ObstacleType>().GetObstacleType() == ObstacleTypes.Metal)
+                {
+                    ObjectPooler.Instance.SpawnObjectPool(ObjectPooler.TypeObjectPool.metalImpact, hit.point, Quaternion.LookRotation(direction));
                 }
                 else
                 {
@@ -70,7 +73,6 @@ public class Bullet : MonoBehaviour
             transform.Translate(Vector3.forward * 100 * Time.deltaTime * _force);
         }
     }
-    
     public void SetForceValue(int force)
     {
         _force = force;

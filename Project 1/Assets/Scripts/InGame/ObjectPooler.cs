@@ -29,7 +29,8 @@ public class ObjectPooler : MonoBehaviour
         MuzzleEffect,
         humanImpact,
         rockImpact,
-        woodImpact
+        woodImpact,
+        metalImpact
 
     }
     [SerializeField]

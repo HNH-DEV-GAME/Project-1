@@ -14685,7 +14685,6 @@ GameObject:
   m_Component:
   - component: {fileID: 424018}
   - component: {fileID: 169331339007912319}
-  - component: {fileID: 7655798695698407863}
   m_Layer: 0
   m_Name: MuzzleFlash
   m_TagString: Untagged
@@ -14725,29 +14724,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 011f1048733ffb44599bb0e3477ce451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeDelay: 0.6
---- !u!114 &7655798695698407863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 124018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &124020
 GameObject:
   m_ObjectHideFlags: 0
